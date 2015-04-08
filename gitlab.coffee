@@ -97,7 +97,7 @@ module.exports = (robot) ->
                 change = "(new merge request)"
               else
                 change = "updated"
-              robot.send user, "Merge Request #{bold(hook.object_attributes.iid)} \"#{hook.object_attributes.title}\" #{change} (#{url})"
+              robot.send user, "Merge Request #{bold(hook.object_attributes.iid)} \"#{hook.object_attributes.title}\" #{change} (" + querystring.stringify(#{url}) + ")"
 
   robot.router.post "/gitlab/system", (req, res) ->
     handler "system", req, res
