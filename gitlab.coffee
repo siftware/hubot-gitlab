@@ -91,9 +91,13 @@ module.exports = (robot) ->
             when "issue"
               robot.send user, "Issue #{bold(hook.object_attributes.iid)}: #{hook.object_attributes.title} (#{hook.object_attributes.state}) at #{hook.object_attributes.url}"
             when "merge_request"
-              robot.send user, "Merge Request #{bold(hook.object_attributes.iid)}: #{hook.object_attributes.title} (#{hook.object_attributes.state}) between #{bold(hook.object_attributes.source_branch)} and #{bold(hook.object_attributes.target_branch)}"
-          if hook.object_attributes.description
-            robot.send user, ">> #{hook.object_attributes.description}"
+              url = "http://code.siftware.com/#{hook.object_attributes.target.namespace}/#{hook.object_attributes.target.name}/merge_requests/#{hook.object_attributes.iid}"
+
+              if hook.object_attributes.created_at == hook.object_attributes.updated_at
+                change = "(new merge request)"
+              else
+                change = "updated"
+              robot.send user, "Merge Request #{bold(hook.object_attributes.iid)} \"#{hook.object_attributes.title}\" #{change} (#{url})"
 
   robot.router.post "/gitlab/system", (req, res) ->
     handler "system", req, res
