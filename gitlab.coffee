@@ -98,6 +98,9 @@ module.exports = (robot) ->
               else
                 info = "MR Updated \#"
               robot.send user, "#{info}#{bold(hook.object_attributes.iid)} \"#{hook.object_attributes.title}\" (#{hook.object_attributes.url})"
+            when "note"
+              if hook.object_attributes.noteable_type == "MergeRequest"
+                robot.send user, "New comment on MR \##{hook.merge_request.id} \"#{hook.merge_request.title}\" by #{hook.user.username} (#{hook.object_attributes.url})"
 
   robot.router.post "/gitlab/system", (req, res) ->
     handler "system", req, res
