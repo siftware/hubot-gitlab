@@ -91,7 +91,7 @@ module.exports = (robot) ->
             when "issue"
               robot.send user, "Issue #{bold(hook.object_attributes.iid)}: #{hook.object_attributes.title} (#{hook.object_attributes.state}) at #{hook.object_attributes.url}"
             when "merge_request"
-              link = "https://code.siftware.com/#{encodeURI(hook.object_attributes.target.path_with_namespace)}/merge_requests/#{hook.object_attributes.iid}"
+              link = "https://code.siftware.com/#{encodeURI(hook.object_attributes.target.path_with_namespace)}/merge_requests/#{encodeURI(hook.object_attributes.iid)}"
 
               if hook.object_attributes.created_at == hook.object_attributes.updated_at
                 info = "New MR created \#"
